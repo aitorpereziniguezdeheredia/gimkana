@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🏴‍☠️ La Gimkana del Tesoro Pirata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #f0c040;
+      --gold-dark: #b8860b;
+      --gold-light: #fde98a;
+      --parchment: #f5e6c8;
+      --parchment-dark: #d4b483;
+      --wood: #5c3a1e;
+      --wood-light: #8b5e3c;
+      --ocean: #1a3a5c;
+      --ocean-light: #2a5580;
+      --red-pirate: #8b1a1a;
+      --ink: #2c1810;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--ocean);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(42,85,128,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(26,58,92,0.8) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M0 50 Q25 30 50 50 Q75 70 100 50' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3Cpath d='M0 70 Q25 50 50 70 Q75 90 100 70' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3Cpath d='M0 30 Q25 10 50 30 Q75 50 100 30' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3C/svg%3E");
+      font-family: 'Crimson Text', Georgia, serif;
+      color: var(--parchment);
+      overflow-x: hidden;
+    }
+
+    /* ── STARS ── */
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 3rem 1rem 1.5rem;
+    }
+    .skull {
+      font-size: 3.5rem;
+      animation: float 3s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+    h1 {
+      font-family: 'Pirata One', cursive;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--gold);
+      text-shadow:
+        0 0 20px rgba(240,192,64,0.6),
+        3px 3px 0 var(--wood),
+        6px 6px 0 rgba(0,0,0,0.3);
+      letter-spacing: 2px;
+      margin: 0.5rem 0;
+    }
+    .subtitle {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--parchment-dark);
+      margin-bottom: 0.5rem;
+    }
+    .progress-bar-wrap {
+      max-width: 400px;
+      margin: 1.5rem auto 0;
+      background: rgba(0,0,0,0.3);
+      border-radius: 20px;
+      border: 2px solid var(--gold-dark);
+      overflow: hidden;
+      height: 18px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+      border-radius: 20px;
+      transition: width 0.6s ease;
+      width: 0%;
+    }
+    .progress-text {
+      font-family: 'Pirata One', cursive;
+      color: var(--gold);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+
+    /* ── ROPE DIVIDER ── */
+    .rope {
+      width: 100%;
+      text-align: center;
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      color: var(--parchment-dark);
+      letter-spacing: 6px;
+      opacity: 0.5;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+    }
+
+    /* ── CARD ── */
+    .card-scene {
+      perspective: 1000px;
+      height: 360px;
+      cursor: default;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-scene.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.5),
+        0 0 0 3px var(--gold-dark),
+        inset 0 0 0 2px rgba(240,192,64,0.2);
+    }
+
+    /* FRONT */
+    .card-front {
+      background:
+        linear-gradient(160deg, #3d2b1a 0%, #2c1810 60%, #1a0f08 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.4rem 1.2rem 1rem;
+      gap: 0.5rem;
+    }
+    .card-front::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(240,192,64,0.25);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+    .card-number {
+      font-family: 'Pirata One', cursive;
+      font-size: 0.85rem;
+      color: var(--gold-dark);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .card-icon {
+      font-size: 2.6rem;
+      filter: drop-shadow(0 0 8px rgba(240,192,64,0.5));
+      animation: iconBob 4s ease-in-out infinite;
+      animation-delay: var(--icon-delay, 0s);
+    }
+    @keyframes iconBob {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .card-title {
+      font-family: 'Pirata One', cursive;
+      font-size: 1rem;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .divider-gold {
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+      margin: 0.2rem 0;
+    }
+    .clue-text {
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--parchment);
+      text-align: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .reveal-btn {
+      margin-top: auto;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.4rem;
+      font-family: 'Pirata One', cursive;
+      font-size: 1rem;
+      color: var(--wood);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+      letter-spacing: 1px;
+    }
+    .reveal-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 6px 20px rgba(240,192,64,0.5);
+      filter: brightness(1.1);
+    }
+    .reveal-btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+    .solved-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: var(--gold);
+      color: var(--wood);
+      font-family: 'Pirata One', cursive;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* BACK */
+    .card-back {
+      transform: rotateY(180deg);
+      background: var(--parchment);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1rem;
+    }
+    .card-back::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 2px solid var(--parchment-dark);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+    .back-img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 3px solid var(--parchment-dark);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .back-caption {
+      font-family: 'Pirata One', cursive;
+      font-size: 1rem;
+      color: var(--wood);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .back-sub {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--wood-light);
+      text-align: center;
+    }
+    .flip-back-btn {
+      background: none;
+      border: 2px solid var(--wood-light);
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+      font-family: 'Pirata One', cursive;
+      font-size: 0.85rem;
+      color: var(--wood);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 1px;
+    }
+    .flip-back-btn:hover {
+      background: var(--wood-light);
+      color: var(--parchment);
+    }
+
+    /* ── CONFETTI ── */
+    .confetti-piece {
+      position: fixed;
+      width: 10px; height: 10px;
+      top: -20px;
+      animation: confettiFall linear forwards;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 2px;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── WIN BANNER ── */
+    .win-banner {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .win-banner.show { display: flex; }
+    .win-banner h2 {
+      font-family: 'Pirata One', cursive;
+      font-size: clamp(2rem, 8vw, 4.5rem);
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(240,192,64,0.8), 3px 3px 0 var(--wood);
+      animation: pulse 1s ease-in-out infinite alternate;
+    }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+    .win-banner p {
+      font-size: 1.4rem;
+      color: var(--parchment);
+      font-style: italic;
+      max-width: 500px;
+    }
+    .win-trophy { font-size: 5rem; animation: float 2s ease-in-out infinite; }
+    .restart-btn {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      border: none; border-radius: 10px;
+      padding: 0.8rem 2rem;
+      font-family: 'Pirata One', cursive;
+      font-size: 1.2rem;
+      color: var(--wood);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(240,192,64,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .restart-btn:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(240,192,64,0.6); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .grid { padding: 1rem 1rem 3rem; gap: 1.4rem; }
+      .card-scene { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<header>
+  <div class="skull">🏴‍☠️</div>
+  <h1>La Gimkana del Tesoro</h1>
+  <p class="subtitle">Resuelve las pistas y descubre el tesoro escondido</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <p class="progress-text" id="progressText">0 / 10 pistas resueltas</p>
+</header>
+
+<div class="rope">⚓ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ⚓</div>
+
+<main class="grid" id="grid"></main>
+
+<div class="win-banner" id="winBanner">
+  <div class="win-trophy">🏆</div>
+  <h2>¡¡¡ El Tesoro es Tuyo !!!</h2>
+  <p>Has resuelto todas las pistas del mapa. ¡Eres un auténtico pirata del tesoro!</p>
+  <button class="restart-btn" onclick="restart()">⚓ Jugar de nuevo</button>
+</div>
+
+<script>
+  // ── DATA ─────────────────────────────────────────────────────────────────
+  const cards = [
+    {
+      number: 1,
+      icon: "🗺️",
+      title: "El Mapa Misterioso",
+      clue: "Soy plano y antiguo, con líneas y marcas. Los piratas me usan para encontrar sus riquezas. ¿Qué soy?",
+      answer: "Un mapa",
+      image: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80",
+      caption: "¡El Mapa del Tesoro!",
+      sub: "Sigue la X marcada..."
+    },
+    {
+      number: 2,
+      icon: "⚓",
+      title: "El Ancla Dormida",
+      clue: "Caigo al fondo del mar para que el barco no se mueva. Soy de hierro y muy pesada. ¿Qué soy?",
+      answer: "Un ancla",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
+      caption: "¡El Mar Pirata!",
+      sub: "Aguas profundas y salvajes"
+    },
+    {
+      number: 3,
+      icon: "🦜",
+      title: "El Loro Parlanchín",
+      clue: "Soy un pájaro de colores que vive en el hombro del capitán y repite todo lo que escucha. ¿Qué soy?",
+      answer: "Un loro",
+      image: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&q=80",
+      caption: "¡El Loro del Capitán!",
+      sub: "¡Pieces of eight! ¡Pieces of eight!"
+    },
+    {
+      number: 4,
+      icon: "🔭",
+      title: "El Ojo Lejano",
+      clue: "Con un ojo cerrado y yo pegado al otro, los piratas ven tierra desde muy lejos. ¿Qué soy?",
+      answer: "Un catalejo",
+      image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=600&q=80",
+      caption: "¡Tierra a la vista!",
+      sub: "El horizonte infinito"
+    },
+    {
+      number: 5,
+      icon: "💀",
+      title: "La Bandera Temida",
+      clue: "Soy una bandera negra con una calavera blanca. Cuando me ven, los barcos tiemblan de miedo. ¿Qué soy?",
+      answer: "La Jolly Roger",
+      image: "https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=600&q=80",
+      caption: "¡La Bandera Pirata!",
+      sub: "Miedo en alta mar"
+    },
+    {
+      number: 6,
+      icon: "💎",
+      title: "Las Piedras Brillantes",
+      clue: "Brillo más que el sol, valgo más que el oro. Los reyes me usan en sus coronas. ¿Qué soy?",
+      answer: "Las joyas o diamantes",
+      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80",
+      caption: "¡Las Joyas del Tesoro!",
+      sub: "Un brillo que encandila"
+    },
+    {
+      number: 7,
+      icon: "🏝️",
+      title: "La Isla Secreta",
+      clue: "Estoy rodeada de agua por todos lados, soy pequeña y en mí se esconde el tesoro. ¿Qué soy?",
+      answer: "Una isla",
+      image: "https://images.unsplash.com/photo-1499591934245-40b55745b905?w=600&q=80",
+      caption: "¡La Isla del Tesoro!",
+      sub: "Tierra prometida del pirata"
+    },
+    {
+      number: 8,
+      icon: "⚔️",
+      title: "La Hoja Afilada",
+      clue: "Soy larga, de metal brillante y muy afilada. Los piratas me llevan al cinto para defenderse. ¿Qué soy?",
+      answer: "Una espada",
+      image: "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=600&q=80",
+      caption: "¡La Espada del Pirata!",
+      sub: "¡En guardia, marinero!"
+    },
+    {
+      number: 9,
+      icon: "🪙",
+      title: "El Metal Preciado",
+      clue: "Soy amarillo y brillante, todos me quieren. Los piratas llenan sus cofres conmigo. ¿Qué soy?",
+      answer: "El oro",
+      image: "https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&q=80",
+      caption: "¡El Oro del Tesoro!",
+      sub: "Monedas de cada rincón del mundo"
+    },
+    {
+      number: 10,
+      icon: "📦",
+      title: "El Cofre Legendario",
+      clue: "Soy de madera con refuerzos de metal, tengo tapa y cerradura. Dentro guardo todos los tesoros. ¿Qué soy?",
+      answer: "El cofre del tesoro",
+      image: "https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c?w=600&q=80",
+      caption: "¡El Cofre del Tesoro!",
+      sub: "¡La recompensa final!"
+    }
+  ];
+
+  // ── STARS ─────────────────────────────────────────────────────────────────
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --dur:${2 + Math.random()*4}s; --delay:${Math.random()*5}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  let solved = JSON.parse(localStorage.getItem('pirata-solved') || '[]');
+
+  // ── RENDER ────────────────────────────────────────────────────────────────
+  const grid = document.getElementById('grid');
+
+  function renderCards() {
+    grid.innerHTML = '';
+    cards.forEach((c, i) => {
+      const isSolved = solved.includes(i);
+      const scene = document.createElement('div');
+      scene.className = 'card-scene' + (isSolved ? ' flipped' : '');
+      scene.id = `card-${i}`;
+      scene.innerHTML = `
+        <div class="card-inner">
+          <div class="card-face card-front">
+            ${isSolved ? '<span class="solved-badge">✓ Resuelta</span>' : ''}
+            <span class="card-number">— Pista ${c.number} —</span>
+            <span class="card-icon" style="--icon-delay:${i * 0.3}s">${c.icon}</span>
+            <span class="card-title">${c.title}</span>
+            <div class="divider-gold"></div>
+            <p class="clue-text">${c.clue}</p>
+            <button class="reveal-btn" onclick="flipCard(${i})">
+              ¡Lo sé! Revelar 🗝️
+            </button>
+          </div>
+          <div class="card-face card-back">
+            <img class="back-img" src="${c.image}" alt="${c.caption}" loading="lazy" />
+            <div class="back-caption">${c.caption}</div>
+            <div class="back-sub">${c.sub}</div>
+            <button class="flip-back-btn" onclick="unflipCard(event, ${i})">🔍 Ver pista de nuevo</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(scene);
+    });
+    updateProgress();
+  }
+
+  function unflipCard(event, i) {
+    event.stopPropagation();
+    const scene = document.getElementById(`card-${i}`);
+    scene.classList.remove('flipped');
+  }
+
+  function flipCard(i) {
+    const scene = document.getElementById(`card-${i}`);
+    scene.classList.add('flipped');
+    if (!solved.includes(i)) {
+      solved.push(i);
+      localStorage.setItem('pirata-solved', JSON.stringify(solved));
+      // add solved badge
+      const front = scene.querySelector('.card-front');
+      if (!front.querySelector('.solved-badge')) {
+        const badge = document.createElement('span');
+        badge.className = 'solved-badge';
+        badge.textContent = '✓ Resuelta';
+        front.appendChild(badge);
+      }
+      launchConfetti();
+      updateProgress();
+      if (solved.length === cards.length) {
+        setTimeout(() => {
+          document.getElementById('winBanner').classList.add('show');
+          bigConfetti();
+        }, 900);
+      }
+    }
+  }
+
+  function updateProgress() {
+    const pct = (solved.length / cards.length) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent =
+      `${solved.length} / ${cards.length} pistas resueltas`;
+  }
+
+  // ── CONFETTI ──────────────────────────────────────────────────────────────
+  const confettiColors = ['#f0c040','#ff6b35','#e63946','#2a9d8f','#ffffff','#fde98a'];
+  function launchConfetti(count = 18) {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.cssText = `
+        left:${20 + Math.random()*60}%;
+        background:${confettiColors[Math.floor(Math.random()*confettiColors.length)]};
+        width:${6+Math.random()*10}px; height:${6+Math.random()*10}px;
+        animation-duration:${1.5+Math.random()*1.5}s;
+        animation-delay:${Math.random()*0.4}s;
+        border-radius:${Math.random()>0.5?'50%':'2px'};
+      `;
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    }
+  }
+  function bigConfetti() {
+    for (let j = 0; j < 6; j++) {
+      setTimeout(() => launchConfetti(30), j * 300);
+    }
+  }
+
+  // ── RESTART ───────────────────────────────────────────────────────────────
+  function restart() {
+    solved = [];
+    localStorage.removeItem('pirata-solved');
+    document.getElementById('winBanner').classList.remove('show');
+    renderCards();
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────────────────
+  renderCards();
+</script>
+</body>
+</html>
