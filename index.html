@@ -15,9 +15,6 @@
       --wood: #5c3a1e;
       --wood-light: #8b5e3c;
       --ocean: #1a3a5c;
-      --ocean-light: #2a5580;
-      --red-pirate: #8b1a1a;
-      --ink: #2c1810;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,346 +25,246 @@
       background-image:
         radial-gradient(ellipse at 20% 50%, rgba(42,85,128,0.6) 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, rgba(26,58,92,0.8) 0%, transparent 50%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M0 50 Q25 30 50 50 Q75 70 100 50' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3Cpath d='M0 70 Q25 50 50 70 Q75 90 100 70' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3Cpath d='M0 30 Q25 10 50 30 Q75 50 100 30' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3C/svg%3E");
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M0 50 Q25 30 50 50 Q75 70 100 50' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3Cpath d='M0 70 Q25 50 50 70 Q75 90 100 70' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3C/svg%3E");
       font-family: 'Crimson Text', Georgia, serif;
       color: var(--parchment);
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ── STARS ── */
-    .stars {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    }
+    /* STARS */
+    .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
     .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle var(--dur, 3s) ease-in-out infinite;
-      animation-delay: var(--delay, 0s);
+      position: absolute; background: white; border-radius: 50%;
+      animation: twinkle var(--dur,3s) ease-in-out infinite;
+      animation-delay: var(--delay,0s);
     }
     @keyframes twinkle {
-      0%,100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
+      0%,100% { opacity:.2; transform:scale(1); }
+      50%      { opacity:1;  transform:scale(1.4); }
     }
 
-    /* ── HEADER ── */
+    /* HEADER */
     header {
       position: relative; z-index: 1;
       text-align: center;
-      padding: 3rem 1rem 1.5rem;
+      padding: 2.5rem 1rem 1rem;
     }
-    .skull {
-      font-size: 3.5rem;
-      animation: float 3s ease-in-out infinite;
-      display: inline-block;
-    }
+    .skull { font-size:3rem; display:inline-block; animation:float 3s ease-in-out infinite; }
     @keyframes float {
-      0%,100% { transform: translateY(0) rotate(-5deg); }
-      50% { transform: translateY(-10px) rotate(5deg); }
+      0%,100% { transform:translateY(0) rotate(-5deg); }
+      50%      { transform:translateY(-10px) rotate(5deg); }
     }
     h1 {
-      font-family: 'Pirata One', cursive;
-      font-size: clamp(2rem, 6vw, 4rem);
-      color: var(--gold);
-      text-shadow:
-        0 0 20px rgba(240,192,64,0.6),
-        3px 3px 0 var(--wood),
-        6px 6px 0 rgba(0,0,0,0.3);
-      letter-spacing: 2px;
-      margin: 0.5rem 0;
+      font-family:'Pirata One',cursive;
+      font-size:clamp(1.8rem,5vw,3.5rem);
+      color:var(--gold);
+      text-shadow:0 0 20px rgba(240,192,64,.6),3px 3px 0 var(--wood),6px 6px 0 rgba(0,0,0,.3);
+      letter-spacing:2px; margin:.4rem 0;
     }
-    .subtitle {
-      font-family: 'Crimson Text', serif;
-      font-style: italic;
-      font-size: 1.2rem;
-      color: var(--parchment-dark);
-      margin-bottom: 0.5rem;
-    }
+    .subtitle { font-style:italic; font-size:1.1rem; color:var(--parchment-dark); }
     .progress-bar-wrap {
-      max-width: 400px;
-      margin: 1.5rem auto 0;
-      background: rgba(0,0,0,0.3);
-      border-radius: 20px;
-      border: 2px solid var(--gold-dark);
-      overflow: hidden;
-      height: 18px;
+      max-width:380px; margin:1.2rem auto 0;
+      background:rgba(0,0,0,.3); border-radius:20px;
+      border:2px solid var(--gold-dark); overflow:hidden; height:16px;
     }
     .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
-      border-radius: 20px;
-      transition: width 0.6s ease;
-      width: 0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));
+      border-radius:20px; transition:width .6s ease; width:0%;
     }
     .progress-text {
-      font-family: 'Pirata One', cursive;
-      color: var(--gold);
-      font-size: 0.95rem;
-      margin-top: 0.4rem;
+      font-family:'Pirata One',cursive; color:var(--gold);
+      font-size:.9rem; margin-top:.3rem;
     }
-
-    /* ── ROPE DIVIDER ── */
     .rope {
-      width: 100%;
-      text-align: center;
-      margin: 1rem 0;
-      font-size: 1.2rem;
-      color: var(--parchment-dark);
-      letter-spacing: 6px;
-      opacity: 0.5;
+      text-align:center; margin:.8rem 0; font-size:1.1rem;
+      color:var(--parchment-dark); letter-spacing:6px; opacity:.4;
+      position:relative; z-index:1;
     }
 
-    /* ── GRID ── */
-    .grid {
-      position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem 2rem 4rem;
+    /* CAROUSEL */
+    .carousel-section {
+      position:relative; z-index:1; flex:1;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:0 0 2.5rem;
+    }
+    .stage {
+      position:relative; width:100%; max-width:900px;
+      height:400px; display:flex; align-items:center;
+      justify-content:center; perspective:1100px; overflow:visible;
     }
 
-    /* ── CARD ── */
-    .card-scene {
-      perspective: 1000px;
-      height: 360px;
-      cursor: default;
+    /* CARD */
+    .c-card {
+      position:absolute; width:240px; height:340px;
+      border-radius:16px; cursor:pointer;
+      transition:transform .55s cubic-bezier(.4,0,.2,1),
+                 opacity .55s ease, box-shadow .55s ease;
     }
     .card-inner {
-      position: relative;
-      width: 100%; height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position:relative; width:100%; height:100%;
+      transform-style:preserve-3d;
+      transition:transform .75s cubic-bezier(.4,0,.2,1);
     }
-    .card-scene.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-face {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.5),
-        0 0 0 3px var(--gold-dark),
-        inset 0 0 0 2px rgba(240,192,64,0.2);
+    .card-inner.flipped { transform:rotateY(180deg); }
+    .face {
+      position:absolute; inset:0; border-radius:16px;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden; overflow:hidden;
     }
 
     /* FRONT */
-    .card-front {
-      background:
-        linear-gradient(160deg, #3d2b1a 0%, #2c1810 60%, #1a0f08 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1.4rem 1.2rem 1rem;
-      gap: 0.5rem;
+    .face-front {
+      background:linear-gradient(160deg,#3d2b1a 0%,#2c1810 60%,#1a0f08 100%);
+      border:2.5px solid var(--gold-dark);
+      box-shadow:inset 0 0 0 1px rgba(240,192,64,.15);
+      display:flex; flex-direction:column; align-items:center;
+      padding:1.4rem 1.2rem 1rem; gap:.5rem;
     }
-    .card-front::before {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(240,192,64,0.25);
-      border-radius: 10px;
-      pointer-events: none;
-    }
-    .card-number {
-      font-family: 'Pirata One', cursive;
-      font-size: 0.85rem;
-      color: var(--gold-dark);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-    .card-icon {
-      font-size: 2.6rem;
-      filter: drop-shadow(0 0 8px rgba(240,192,64,0.5));
-      animation: iconBob 4s ease-in-out infinite;
-      animation-delay: var(--icon-delay, 0s);
-    }
-    @keyframes iconBob {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-    .card-title {
-      font-family: 'Pirata One', cursive;
-      font-size: 1rem;
-      color: var(--gold);
-      text-align: center;
-      letter-spacing: 1px;
-    }
-    .divider-gold {
-      width: 80%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
-      margin: 0.2rem 0;
-    }
-    .clue-text {
-      font-family: 'Crimson Text', serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: var(--parchment);
-      text-align: center;
-      flex: 1;
-      display: flex;
-      align-items: center;
-    }
-    .reveal-btn {
-      margin-top: auto;
-      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
-      border: none;
-      border-radius: 8px;
-      padding: 0.6rem 1.4rem;
-      font-family: 'Pirata One', cursive;
-      font-size: 1rem;
-      color: var(--wood);
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
-      transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
-      letter-spacing: 1px;
-    }
-    .reveal-btn:hover {
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 6px 20px rgba(240,192,64,0.5);
-      filter: brightness(1.1);
-    }
-    .reveal-btn:active {
-      transform: translateY(0) scale(0.97);
-    }
-    .solved-badge {
-      position: absolute;
-      top: 10px; right: 10px;
-      background: var(--gold);
-      color: var(--wood);
-      font-family: 'Pirata One', cursive;
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    .face-front::before {
+      content:''; position:absolute; inset:8px;
+      border:1px solid rgba(240,192,64,.2); border-radius:10px; pointer-events:none;
     }
 
     /* BACK */
-    .card-back {
-      transform: rotateY(180deg);
-      background: var(--parchment);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      padding: 1rem;
+    .face-back {
+      transform:rotateY(180deg);
+      background:var(--parchment); border:2.5px solid var(--parchment-dark);
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; gap:.7rem; padding:1rem;
     }
-    .card-back::after {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border: 2px solid var(--parchment-dark);
-      border-radius: 10px;
-      pointer-events: none;
+    .face-back::after {
+      content:''; position:absolute; inset:8px;
+      border:2px solid var(--parchment-dark); border-radius:10px; pointer-events:none;
     }
     .back-img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 3px solid var(--parchment-dark);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width:100%; height:190px; object-fit:cover;
+      border-radius:8px; border:3px solid var(--parchment-dark);
     }
-    .back-caption {
-      font-family: 'Pirata One', cursive;
-      font-size: 1rem;
-      color: var(--wood);
-      text-align: center;
-      letter-spacing: 1px;
-    }
-    .back-sub {
-      font-family: 'Crimson Text', serif;
-      font-style: italic;
-      font-size: 0.9rem;
-      color: var(--wood-light);
-      text-align: center;
-    }
+    .back-caption { font-family:'Pirata One',cursive; font-size:1rem; color:var(--wood); text-align:center; }
+    .back-sub     { font-style:italic; font-size:.85rem; color:var(--wood-light); text-align:center; }
     .flip-back-btn {
-      background: none;
-      border: 2px solid var(--wood-light);
-      border-radius: 8px;
-      padding: 0.4rem 1rem;
-      font-family: 'Pirata One', cursive;
-      font-size: 0.85rem;
-      color: var(--wood);
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      letter-spacing: 1px;
+      background:none; border:1.5px solid var(--wood-light); border-radius:8px;
+      padding:.35rem .9rem; font-family:'Pirata One',cursive; font-size:.8rem;
+      color:var(--wood); cursor:pointer; transition:background .2s, color .2s;
     }
-    .flip-back-btn:hover {
-      background: var(--wood-light);
-      color: var(--parchment);
+    .flip-back-btn:hover { background:var(--wood-light); color:var(--parchment); }
+
+    /* Card inner elements */
+    .card-number { font-family:'Pirata One',cursive; font-size:.8rem; color:var(--gold-dark); letter-spacing:3px; }
+    .card-icon {
+      font-size:2.8rem;
+      filter:drop-shadow(0 0 8px rgba(240,192,64,.5));
+      animation:iconBob 4s ease-in-out infinite;
+      animation-delay:var(--icon-delay,0s);
+    }
+    @keyframes iconBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+    .card-title { font-family:'Pirata One',cursive; font-size:1rem; color:var(--gold); text-align:center; }
+    .divider-gold { width:80%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dark),transparent); }
+    .clue-text { font-size:1rem; line-height:1.5; color:var(--parchment); text-align:center; flex:1; display:flex; align-items:center; }
+    .reveal-btn {
+      margin-top:auto;
+      background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));
+      border:none; border-radius:8px; padding:.6rem 1.4rem;
+      font-family:'Pirata One',cursive; font-size:.95rem; color:var(--wood);
+      cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);
+      transition:transform .15s, box-shadow .15s, filter .15s;
+    }
+    .reveal-btn:hover { transform:translateY(-2px) scale(1.04); box-shadow:0 6px 20px rgba(240,192,64,.5); filter:brightness(1.1); }
+    .reveal-btn:active { transform:scale(.97); }
+    .solved-badge {
+      position:absolute; top:10px; right:10px;
+      background:var(--gold); color:var(--wood);
+      font-family:'Pirata One',cursive; font-size:.65rem;
+      padding:2px 7px; border-radius:20px; z-index:2;
     }
 
-    /* ── CONFETTI ── */
+    /* LOCKED */
+    .card-locked .face-front { background:linear-gradient(160deg,#141414 0%,#0c0c0c 100%); border-color:#383838; }
+    .card-locked .face-front::before { border-color:rgba(255,255,255,.06); }
+    .card-locked .card-number, .card-locked .card-title { color:#444; }
+    .card-locked .card-icon { filter:grayscale(1) brightness(.25); animation:none; }
+    .card-locked .clue-text { filter:blur(5px); opacity:.3; user-select:none; }
+    .card-locked .divider-gold { background:linear-gradient(90deg,transparent,#333,transparent); }
+    .lock-icon { font-size:1.8rem; opacity:.35; margin-top:auto; }
+    .lock-msg { font-style:italic; font-size:.8rem; color:#484848; text-align:center; }
+    .reveal-btn.locked-btn { background:#2a2a2a; color:#484848; cursor:not-allowed; pointer-events:none; box-shadow:none; }
+
+    /* POSITIONS */
+    .pos-center { transform:translateX(0) scale(1) translateZ(0); opacity:1; z-index:10; box-shadow:0 16px 50px rgba(0,0,0,.7),0 0 0 2.5px var(--gold); cursor:default; }
+    .pos-left1  { transform:translateX(-210px) scale(.8) translateZ(-80px); opacity:.65; z-index:6; }
+    .pos-left2  { transform:translateX(-360px) scale(.64) translateZ(-160px); opacity:.35; z-index:3; }
+    .pos-right1 { transform:translateX(210px) scale(.8) translateZ(-80px); opacity:.65; z-index:6; }
+    .pos-right2 { transform:translateX(360px) scale(.64) translateZ(-160px); opacity:.35; z-index:3; }
+    .pos-hidden { opacity:0; z-index:0; pointer-events:none; transform:translateX(0) scale(.4); }
+
+    /* NAV */
+    .nav-row { display:flex; align-items:center; justify-content:center; gap:1.5rem; margin-top:1.5rem; }
+    .nav-btn {
+      background:rgba(240,192,64,.12); border:2px solid var(--gold-dark);
+      border-radius:50%; width:46px; height:46px; font-size:22px;
+      color:var(--gold); cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:background .2s, transform .15s;
+    }
+    .nav-btn:hover:not(:disabled) { background:rgba(240,192,64,.25); transform:scale(1.1); }
+    .nav-btn:disabled { opacity:.25; cursor:default; }
+
+    /* DOTS */
+    .dots { display:flex; gap:6px; align-items:center; flex-wrap:wrap; justify-content:center; max-width:260px; }
+    .dot {
+      width:8px; height:8px; border-radius:50%;
+      background:var(--gold-dark); opacity:.4; cursor:pointer;
+      transition:background .3s, opacity .3s, transform .3s;
+    }
+    .dot.active  { background:var(--gold);  opacity:1; transform:scale(1.5); }
+    .dot.solved  { background:#4caf50; opacity:.85; }
+
+    /* CONFETTI */
     .confetti-piece {
-      position: fixed;
-      width: 10px; height: 10px;
-      top: -20px;
-      animation: confettiFall linear forwards;
-      pointer-events: none;
-      z-index: 9999;
-      border-radius: 2px;
+      position:fixed; top:-20px;
+      animation:confettiFall linear forwards;
+      pointer-events:none; z-index:9999; border-radius:2px;
     }
     @keyframes confettiFall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+      0%   { transform:translateY(0) rotate(0deg); opacity:1; }
+      100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
     }
 
-    /* ── WIN BANNER ── */
+    /* WIN */
     .win-banner {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      gap: 1.5rem;
-      padding: 2rem;
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,.88); z-index:1000;
+      align-items:center; justify-content:center;
+      flex-direction:column; text-align:center; gap:1.5rem; padding:2rem;
     }
-    .win-banner.show { display: flex; }
+    .win-banner.show { display:flex; }
+    .win-trophy { font-size:5rem; animation:float 2s ease-in-out infinite; }
     .win-banner h2 {
-      font-family: 'Pirata One', cursive;
-      font-size: clamp(2rem, 8vw, 4.5rem);
-      color: var(--gold);
-      text-shadow: 0 0 40px rgba(240,192,64,0.8), 3px 3px 0 var(--wood);
-      animation: pulse 1s ease-in-out infinite alternate;
+      font-family:'Pirata One',cursive; font-size:clamp(2rem,7vw,4rem);
+      color:var(--gold); text-shadow:0 0 40px rgba(240,192,64,.8),3px 3px 0 var(--wood);
+      animation:pulse 1s ease-in-out infinite alternate;
     }
-    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
-    .win-banner p {
-      font-size: 1.4rem;
-      color: var(--parchment);
-      font-style: italic;
-      max-width: 500px;
-    }
-    .win-trophy { font-size: 5rem; animation: float 2s ease-in-out infinite; }
+    @keyframes pulse { from{transform:scale(1)} to{transform:scale(1.05)} }
+    .win-banner p { font-size:1.3rem; color:var(--parchment); font-style:italic; max-width:480px; }
     .restart-btn {
-      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-      border: none; border-radius: 10px;
-      padding: 0.8rem 2rem;
-      font-family: 'Pirata One', cursive;
-      font-size: 1.2rem;
-      color: var(--wood);
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(240,192,64,0.4);
-      transition: transform 0.15s, box-shadow 0.15s;
+      background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+      border:none; border-radius:10px; padding:.8rem 2rem;
+      font-family:'Pirata One',cursive; font-size:1.1rem;
+      color:var(--wood); cursor:pointer; transition:transform .15s;
     }
-    .restart-btn:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(240,192,64,0.6); }
+    .restart-btn:hover { transform:scale(1.05); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .grid { padding: 1rem 1rem 3rem; gap: 1.4rem; }
-      .card-scene { height: 320px; }
+    /* RESPONSIVE */
+    @media (max-width:600px) {
+      .stage { height:360px; }
+      .c-card { width:210px; height:300px; }
+      .pos-left1  { transform:translateX(-155px) scale(.76) translateZ(-80px);  opacity:.5; }
+      .pos-left2  { transform:translateX(-260px) scale(.58) translateZ(-160px); opacity:.25; }
+      .pos-right1 { transform:translateX(155px)  scale(.76) translateZ(-80px);  opacity:.5; }
+      .pos-right2 { transform:translateX(260px)  scale(.58) translateZ(-160px); opacity:.25; }
+      .card-icon { font-size:2.2rem; }
     }
   </style>
 </head>
@@ -387,7 +284,14 @@
 
 <div class="rope">⚓ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ⚓</div>
 
-<main class="grid" id="grid"></main>
+<main class="carousel-section">
+  <div class="stage" id="stage"></div>
+  <div class="nav-row">
+    <button class="nav-btn" id="btnPrev" onclick="move(-1)">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="btnNext" onclick="move(1)">›</button>
+  </div>
+</main>
 
 <div class="win-banner" id="winBanner">
   <div class="win-trophy">🏆</div>
@@ -397,235 +301,198 @@
 </div>
 
 <script>
-  // ── DATA ─────────────────────────────────────────────────────────────────
   const cards = [
-    {
-      number: 1,
-      icon: "🗺️",
-      title: "El Mapa Misterioso",
-      clue: "Soy plano y antiguo, con líneas y marcas. Los piratas me usan para encontrar sus riquezas. ¿Qué soy?",
-      answer: "Un mapa",
-      image: "./image/WhatsApp Image 2026-03-14 at 00.11.50.jpeg",
-      caption: "¡El Mapa del Tesoro!",
-      sub: "Sigue la X marcada..."
-    },
-    {
-      number: 2,
-      icon: "⚓",
-      title: "El Ancla Dormida",
-      clue: "Caigo al fondo del mar para que el barco no se mueva. Soy de hierro y muy pesada. ¿Qué soy?",
-      answer: "Un ancla",
-      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
-      caption: "¡El Mar Pirata!",
-      sub: "Aguas profundas y salvajes"
-    },
-    {
-      number: 3,
-      icon: "🦜",
-      title: "El Loro Parlanchín",
-      clue: "Soy un pájaro de colores que vive en el hombro del capitán y repite todo lo que escucha. ¿Qué soy?",
-      answer: "Un loro",
-      image: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&q=80",
-      caption: "¡El Loro del Capitán!",
-      sub: "¡Pieces of eight! ¡Pieces of eight!"
-    },
-    {
-      number: 4,
-      icon: "🔭",
-      title: "El Ojo Lejano",
-      clue: "Con un ojo cerrado y yo pegado al otro, los piratas ven tierra desde muy lejos. ¿Qué soy?",
-      answer: "Un catalejo",
-      image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=600&q=80",
-      caption: "¡Tierra a la vista!",
-      sub: "El horizonte infinito"
-    },
-    {
-      number: 5,
-      icon: "💀",
-      title: "La Bandera Temida",
-      clue: "Soy una bandera negra con una calavera blanca. Cuando me ven, los barcos tiemblan de miedo. ¿Qué soy?",
-      answer: "La Jolly Roger",
-      image: "https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=600&q=80",
-      caption: "¡La Bandera Pirata!",
-      sub: "Miedo en alta mar"
-    },
-    {
-      number: 6,
-      icon: "💎",
-      title: "Las Piedras Brillantes",
-      clue: "Brillo más que el sol, valgo más que el oro. Los reyes me usan en sus coronas. ¿Qué soy?",
-      answer: "Las joyas o diamantes",
-      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80",
-      caption: "¡Las Joyas del Tesoro!",
-      sub: "Un brillo que encandila"
-    },
-    {
-      number: 7,
-      icon: "🏝️",
-      title: "La Isla Secreta",
-      clue: "Estoy rodeada de agua por todos lados, soy pequeña y en mí se esconde el tesoro. ¿Qué soy?",
-      answer: "Una isla",
-      image: "https://images.unsplash.com/photo-1499591934245-40b55745b905?w=600&q=80",
-      caption: "¡La Isla del Tesoro!",
-      sub: "Tierra prometida del pirata"
-    },
-    {
-      number: 8,
-      icon: "⚔️",
-      title: "La Hoja Afilada",
-      clue: "Soy larga, de metal brillante y muy afilada. Los piratas me llevan al cinto para defenderse. ¿Qué soy?",
-      answer: "Una espada",
-      image: "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=600&q=80",
-      caption: "¡La Espada del Pirata!",
-      sub: "¡En guardia, marinero!"
-    },
-    {
-      number: 9,
-      icon: "🪙",
-      title: "El Metal Preciado",
-      clue: "Soy amarillo y brillante, todos me quieren. Los piratas llenan sus cofres conmigo. ¿Qué soy?",
-      answer: "El oro",
-      image: "https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&q=80",
-      caption: "¡El Oro del Tesoro!",
-      sub: "Monedas de cada rincón del mundo"
-    },
-    {
-      number: 10,
-      icon: "📦",
-      title: "El Cofre Legendario",
-      clue: "Soy de madera con refuerzos de metal, tengo tapa y cerradura. Dentro guardo todos los tesoros. ¿Qué soy?",
-      answer: "El cofre del tesoro",
-      image: "https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c?w=600&q=80",
-      caption: "¡El Cofre del Tesoro!",
-      sub: "¡La recompensa final!"
-    }
+    { n:1,  icon:"🗺️", title:"El Mapa Misterioso",    clue:"Soy plano y antiguo, con líneas y marcas. Los piratas me usan para encontrar sus riquezas. ¿Qué soy?",              image:"https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80", caption:"¡El Mapa del Tesoro!",     sub:"Sigue la X marcada..." },
+    { n:2,  icon:"⚓",  title:"El Ancla Dormida",       clue:"Caigo al fondo del mar para que el barco no se mueva. Soy de hierro y muy pesada. ¿Qué soy?",                        image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80", caption:"¡El Mar Pirata!",          sub:"Aguas profundas y salvajes" },
+    { n:3,  icon:"🦜",  title:"El Loro Parlanchín",     clue:"Soy un pájaro de colores que vive en el hombro del capitán y repite todo lo que escucha. ¿Qué soy?",                 image:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&q=80", caption:"¡El Loro del Capitán!",   sub:"¡Pieces of eight! ¡Pieces of eight!" },
+    { n:4,  icon:"🔭",  title:"El Ojo Lejano",          clue:"Con un ojo cerrado y yo pegado al otro, los piratas ven tierra desde muy lejos. ¿Qué soy?",                          image:"https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=600&q=80", caption:"¡Tierra a la vista!",     sub:"El horizonte infinito" },
+    { n:5,  icon:"💀",  title:"La Bandera Temida",      clue:"Soy una bandera negra con una calavera blanca. Cuando me ven, los barcos tiemblan de miedo. ¿Qué soy?",             image:"https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=600&q=80", caption:"¡La Bandera Pirata!",    sub:"Miedo en alta mar" },
+    { n:6,  icon:"💎",  title:"Las Piedras Brillantes", clue:"Brillo más que el sol, valgo más que el oro. Los reyes me usan en sus coronas. ¿Qué soy?",                           image:"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80", caption:"¡Las Joyas del Tesoro!",  sub:"Un brillo que encandila" },
+    { n:7,  icon:"🏝️",  title:"La Isla Secreta",        clue:"Estoy rodeada de agua por todos lados, soy pequeña y en mí se esconde el tesoro. ¿Qué soy?",                        image:"https://images.unsplash.com/photo-1499591934245-40b55745b905?w=600&q=80", caption:"¡La Isla del Tesoro!",   sub:"Tierra prometida del pirata" },
+    { n:8,  icon:"⚔️",  title:"La Hoja Afilada",        clue:"Soy larga, de metal brillante y muy afilada. Los piratas me llevan al cinto para defenderse. ¿Qué soy?",            image:"https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=600&q=80", caption:"¡La Espada del Pirata!", sub:"¡En guardia, marinero!" },
+    { n:9,  icon:"🪙",  title:"El Metal Preciado",      clue:"Soy amarillo y brillante, todos me quieren. Los piratas llenan sus cofres conmigo. ¿Qué soy?",                       image:"https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&q=80", caption:"¡El Oro del Tesoro!",    sub:"Monedas de cada rincón del mundo" },
+    { n:10, icon:"📦",  title:"El Cofre Legendario",    clue:"Soy de madera con refuerzos de metal, tengo tapa y cerradura. Dentro guardo todos los tesoros. ¿Qué soy?",          image:"https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c?w=600&q=80", caption:"¡El Cofre del Tesoro!",  sub:"¡La recompensa final!" },
   ];
 
-  // ── STARS ─────────────────────────────────────────────────────────────────
+  // Stars
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 80; i++) {
     const s = document.createElement('div');
     s.className = 'star';
     const size = Math.random() * 2.5 + 0.5;
-    s.style.cssText = `
-      width:${size}px; height:${size}px;
-      left:${Math.random()*100}%; top:${Math.random()*100}%;
-      --dur:${2 + Math.random()*4}s; --delay:${Math.random()*5}s;
-    `;
+    s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;`;
     starsEl.appendChild(s);
   }
 
-  // ── STATE ─────────────────────────────────────────────────────────────────
-  let solved = JSON.parse(localStorage.getItem('pirata-solved') || '[]');
+  // State
+  let current = 0;
+  let solved  = JSON.parse(localStorage.getItem('pirata-solved') || '[]');
 
-  // ── RENDER ────────────────────────────────────────────────────────────────
-  const grid = document.getElementById('grid');
+  const nextToSolve = () => { for (let i = 0; i < cards.length; i++) if (!solved.includes(i)) return i; return -1; };
+  const posClass    = (i) => {
+    const d = i - current;
+    if (d === 0)  return 'pos-center';
+    if (d === -1) return 'pos-left1';
+    if (d === -2) return 'pos-left2';
+    if (d === 1)  return 'pos-right1';
+    if (d === 2)  return 'pos-right2';
+    return 'pos-hidden';
+  };
 
-  function renderCards() {
-    grid.innerHTML = '';
+  const stage = document.getElementById('stage');
+
+  function buildCards() {
+    stage.innerHTML = '';
+    const next = nextToSolve();
     cards.forEach((c, i) => {
       const isSolved = solved.includes(i);
+      const isLocked = !isSolved && i !== next;
+
       const scene = document.createElement('div');
-      scene.className = 'card-scene' + (isSolved ? ' flipped' : '');
+      scene.className = `c-card ${posClass(i)}${isLocked ? ' card-locked' : ''}`;
       scene.id = `card-${i}`;
-      scene.innerHTML = `
-        <div class="card-inner">
-          <div class="card-face card-front">
-            ${isSolved ? '<span class="solved-badge">✓ Resuelta</span>' : ''}
-            <span class="card-number">— Pista ${c.number} —</span>
-            <span class="card-icon" style="--icon-delay:${i * 0.3}s">${c.icon}</span>
-            <span class="card-title">${c.title}</span>
-            <div class="divider-gold"></div>
-            <p class="clue-text">${c.clue}</p>
-            <button class="reveal-btn" onclick="flipCard(${i})">
-              ¡Lo sé! Revelar 🗝️
-            </button>
-          </div>
-          <div class="card-face card-back">
-            <img class="back-img" src="${c.image}" alt="${c.caption}" loading="lazy" />
-            <div class="back-caption">${c.caption}</div>
-            <div class="back-sub">${c.sub}</div>
-            <button class="flip-back-btn" onclick="unflipCard(event, ${i})">🔍 Ver pista de nuevo</button>
-          </div>
-        </div>
+      scene.addEventListener('click', () => { if (i !== current) moveTo(i); });
+
+      const inner = document.createElement('div');
+      inner.className = 'card-inner' + (isSolved ? ' flipped' : '');
+      inner.id = `inner-${i}`;
+
+      const front = document.createElement('div');
+      front.className = 'face face-front';
+      front.innerHTML = `
+        ${isSolved ? '<span class="solved-badge">✓ Resuelta</span>' : ''}
+        <span class="card-number">— Pista ${c.n} —</span>
+        <span class="card-icon" style="--icon-delay:${i*0.3}s">${c.icon}</span>
+        <span class="card-title">${c.title}</span>
+        <div class="divider-gold"></div>
+        <p class="clue-text">${c.clue}</p>
+        ${isLocked
+          ? `<div class="lock-icon">🔒</div><p class="lock-msg">Resuelve la pista anterior</p><button class="reveal-btn locked-btn">🔒 Bloqueada</button>`
+          : `<button class="reveal-btn" onclick="reveal(event,${i})">¡Lo sé! Revelar 🗝️</button>`}
       `;
-      grid.appendChild(scene);
+
+      const back = document.createElement('div');
+      back.className = 'face face-back';
+      back.innerHTML = `
+        <img class="back-img" src="${c.image}" alt="${c.caption}" loading="lazy"/>
+        <div class="back-caption">${c.caption}</div>
+        <div class="back-sub">${c.sub}</div>
+        <button class="flip-back-btn" onclick="unreveal(event,${i})">🔍 Ver pista de nuevo</button>
+      `;
+
+      inner.appendChild(front);
+      inner.appendChild(back);
+      scene.appendChild(inner);
+      stage.appendChild(scene);
     });
+
+    renderDots();
     updateProgress();
+    updateNavBtns();
   }
 
-  function unflipCard(event, i) {
-    event.stopPropagation();
-    const scene = document.getElementById(`card-${i}`);
-    scene.classList.remove('flipped');
+  function updatePositions() {
+    const next = nextToSolve();
+    cards.forEach((_, i) => {
+      const el = document.getElementById(`card-${i}`);
+      if (!el) return;
+      const isSolved = solved.includes(i);
+      const isLocked = !isSolved && i !== next;
+      el.className = `c-card ${posClass(i)}${isLocked ? ' card-locked' : ''}`;
+    });
+    renderDots();
+    updateNavBtns();
   }
 
-  function flipCard(i) {
-    const scene = document.getElementById(`card-${i}`);
-    scene.classList.add('flipped');
+  function renderDots() {
+    const dotsEl = document.getElementById('dots');
+    dotsEl.innerHTML = '';
+    cards.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === current ? ' active' : '') + (solved.includes(i) ? ' solved' : '');
+      d.onclick = () => moveTo(i);
+      dotsEl.appendChild(d);
+    });
+  }
+
+  function updateProgress() {
+    document.getElementById('progressBar').style.width = (solved.length / cards.length * 100) + '%';
+    document.getElementById('progressText').textContent = `${solved.length} / ${cards.length} pistas resueltas`;
+  }
+
+  function updateNavBtns() {
+    document.getElementById('btnPrev').disabled = current === 0;
+    document.getElementById('btnNext').disabled = current === cards.length - 1;
+  }
+
+  function moveTo(idx) {
+    current = Math.max(0, Math.min(cards.length - 1, idx));
+    updatePositions();
+  }
+  function move(dir) { moveTo(current + dir); }
+
+  function reveal(e, i) {
+    e.stopPropagation();
+    document.getElementById(`inner-${i}`).classList.add('flipped');
     if (!solved.includes(i)) {
       solved.push(i);
       localStorage.setItem('pirata-solved', JSON.stringify(solved));
-      // add solved badge
-      const front = scene.querySelector('.card-front');
-      if (!front.querySelector('.solved-badge')) {
-        const badge = document.createElement('span');
-        badge.className = 'solved-badge';
-        badge.textContent = '✓ Resuelta';
-        front.appendChild(badge);
-      }
       launchConfetti();
       updateProgress();
+      setTimeout(() => {
+        buildCards();
+        const next = nextToSolve();
+        if (next !== -1) setTimeout(() => moveTo(next), 300);
+      }, 800);
       if (solved.length === cards.length) {
         setTimeout(() => {
           document.getElementById('winBanner').classList.add('show');
           bigConfetti();
-        }, 900);
+        }, 1300);
       }
     }
   }
 
-  function updateProgress() {
-    const pct = (solved.length / cards.length) * 100;
-    document.getElementById('progressBar').style.width = pct + '%';
-    document.getElementById('progressText').textContent =
-      `${solved.length} / ${cards.length} pistas resueltas`;
+  function unreveal(e, i) {
+    e.stopPropagation();
+    document.getElementById(`inner-${i}`).classList.remove('flipped');
   }
 
-  // ── CONFETTI ──────────────────────────────────────────────────────────────
+  // Confetti
   const confettiColors = ['#f0c040','#ff6b35','#e63946','#2a9d8f','#ffffff','#fde98a'];
-  function launchConfetti(count = 18) {
+  function launchConfetti(count = 20) {
     for (let i = 0; i < count; i++) {
       const el = document.createElement('div');
       el.className = 'confetti-piece';
-      el.style.cssText = `
-        left:${20 + Math.random()*60}%;
-        background:${confettiColors[Math.floor(Math.random()*confettiColors.length)]};
-        width:${6+Math.random()*10}px; height:${6+Math.random()*10}px;
-        animation-duration:${1.5+Math.random()*1.5}s;
-        animation-delay:${Math.random()*0.4}s;
-        border-radius:${Math.random()>0.5?'50%':'2px'};
-      `;
+      el.style.cssText = `left:${20+Math.random()*60}%;background:${confettiColors[Math.floor(Math.random()*confettiColors.length)]};width:${6+Math.random()*10}px;height:${6+Math.random()*10}px;animation-duration:${1.5+Math.random()*1.5}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()>.5?'50%':'2px'};`;
       document.body.appendChild(el);
       el.addEventListener('animationend', () => el.remove());
     }
   }
-  function bigConfetti() {
-    for (let j = 0; j < 6; j++) {
-      setTimeout(() => launchConfetti(30), j * 300);
-    }
-  }
+  function bigConfetti() { for (let j = 0; j < 6; j++) setTimeout(() => launchConfetti(30), j*300); }
 
-  // ── RESTART ───────────────────────────────────────────────────────────────
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  move(-1);
+    if (e.key === 'ArrowRight') move(1);
+  });
+
+  // Swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) move(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
   function restart() {
-    solved = [];
+    solved = []; current = 0;
     localStorage.removeItem('pirata-solved');
     document.getElementById('winBanner').classList.remove('show');
-    renderCards();
+    buildCards();
   }
 
-  // ── INIT ──────────────────────────────────────────────────────────────────
-  renderCards();
+  buildCards();
 </script>
 </body>
 </html>
