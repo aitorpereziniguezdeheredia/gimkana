@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Gimkana de Dido</title>
+  <title>🏴‍☠️ La Gimkana del Tesoro Pirata</title>
   <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -133,18 +133,17 @@
       transform:rotateY(180deg);
       background:var(--parchment); border:2.5px solid var(--parchment-dark);
       display:flex; flex-direction:column; align-items:center;
-      justify-content:center; gap:.7rem; padding:1rem;
+      justify-content:flex-end; gap:.5rem; padding:.8rem;
     }
     .face-back::after {
       content:''; position:absolute; inset:8px;
       border:2px solid var(--parchment-dark); border-radius:10px; pointer-events:none;
     }
     .back-img {
-      width:100%; height:190px; object-fit:cover;
+      width:100%; flex:1; object-fit:cover;
       border-radius:8px; border:3px solid var(--parchment-dark);
+      min-height:0;
     }
-    .back-caption { font-family:'Pirata One',cursive; font-size:1rem; color:var(--wood); text-align:center; }
-    .back-sub     { font-style:italic; font-size:.85rem; color:var(--wood-light); text-align:center; }
     .flip-back-btn {
       background:none; border:1.5px solid var(--wood-light); border-radius:8px;
       padding:.35rem .9rem; font-family:'Pirata One',cursive; font-size:.8rem;
@@ -152,18 +151,28 @@
     }
     .flip-back-btn:hover { background:var(--wood-light); color:var(--parchment); }
 
-    /* Card inner elements */
-    .card-number { font-family:'Pirata One',cursive; font-size:.8rem; color:var(--gold-dark); letter-spacing:3px; }
-    .card-icon {
-      font-size:2.8rem;
-      filter:drop-shadow(0 0 8px rgba(240,192,64,.5));
-      animation:iconBob 4s ease-in-out infinite;
-      animation-delay:var(--icon-delay,0s);
+    /* Card front — 2 elements */
+    .face-front { justify-content: center; gap: 1rem; }
+    .card-label {
+      font-family: 'Pirata One', cursive;
+      font-size: .85rem;
+      color: var(--gold-dark);
+      letter-spacing: 3px;
+      text-align: center;
+      text-transform: uppercase;
     }
-    @keyframes iconBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-    .card-title { font-family:'Pirata One',cursive; font-size:1rem; color:var(--gold); text-align:center; }
-    .divider-gold { width:80%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dark),transparent); }
-    .clue-text { font-size:1rem; line-height:1.5; color:var(--parchment); text-align:center; flex:1; display:flex; align-items:center; }
+    .card-main {
+      font-family: 'Pirata One', cursive;
+      font-size: 1.3rem;
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.5;
+      text-shadow: 0 0 14px rgba(240,192,64,.4);
+      padding: 0 .4rem;
+    }
+    .card-locked .card-main { filter: blur(6px); opacity: .2; user-select: none; }
+    .card-locked .card-label { color: #444; }
+
     .reveal-btn {
       margin-top:auto;
       background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));
@@ -274,7 +283,7 @@
 
 <header>
   <div class="skull">🏴‍☠️</div>
-  <h1>La Gimkana de Dido</h1>
+  <h1>La Gimkana del Tesoro</h1>
   <p class="subtitle">Resuelve las pistas y descubre el tesoro escondido</p>
   <div class="progress-bar-wrap">
     <div class="progress-bar" id="progressBar"></div>
@@ -302,16 +311,13 @@
 
 <script>
   const cards = [
-    { n:1,  icon:"🗺️", title:"El Mapa Misterioso",    clue:"Soy plano y antiguo, con líneas y marcas. Los piratas me usan para encontrar sus riquezas. ¿Qué soy?",              image:"https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80", caption:"¡El Mapa del Tesoro!",     sub:"Sigue la X marcada..." },
-    { n:2,  icon:"⚓",  title:"El Ancla Dormida",       clue:"Caigo al fondo del mar para que el barco no se mueva. Soy de hierro y muy pesada. ¿Qué soy?",                        image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80", caption:"¡El Mar Pirata!",          sub:"Aguas profundas y salvajes" },
-    { n:3,  icon:"🦜",  title:"El Loro Parlanchín",     clue:"Soy un pájaro de colores que vive en el hombro del capitán y repite todo lo que escucha. ¿Qué soy?",                 image:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&q=80", caption:"¡El Loro del Capitán!",   sub:"¡Pieces of eight! ¡Pieces of eight!" },
-    { n:4,  icon:"🔭",  title:"El Ojo Lejano",          clue:"Con un ojo cerrado y yo pegado al otro, los piratas ven tierra desde muy lejos. ¿Qué soy?",                          image:"https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=600&q=80", caption:"¡Tierra a la vista!",     sub:"El horizonte infinito" },
-    { n:5,  icon:"💀",  title:"La Bandera Temida",      clue:"Soy una bandera negra con una calavera blanca. Cuando me ven, los barcos tiemblan de miedo. ¿Qué soy?",             image:"https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=600&q=80", caption:"¡La Bandera Pirata!",    sub:"Miedo en alta mar" },
-    { n:6,  icon:"💎",  title:"Las Piedras Brillantes", clue:"Brillo más que el sol, valgo más que el oro. Los reyes me usan en sus coronas. ¿Qué soy?",                           image:"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80", caption:"¡Las Joyas del Tesoro!",  sub:"Un brillo que encandila" },
-    { n:7,  icon:"🏝️",  title:"La Isla Secreta",        clue:"Estoy rodeada de agua por todos lados, soy pequeña y en mí se esconde el tesoro. ¿Qué soy?",                        image:"https://images.unsplash.com/photo-1499591934245-40b55745b905?w=600&q=80", caption:"¡La Isla del Tesoro!",   sub:"Tierra prometida del pirata" },
-    { n:8,  icon:"⚔️",  title:"La Hoja Afilada",        clue:"Soy larga, de metal brillante y muy afilada. Los piratas me llevan al cinto para defenderse. ¿Qué soy?",            image:"https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=600&q=80", caption:"¡La Espada del Pirata!", sub:"¡En guardia, marinero!" },
-    { n:9,  icon:"🪙",  title:"El Metal Preciado",      clue:"Soy amarillo y brillante, todos me quieren. Los piratas llenan sus cofres conmigo. ¿Qué soy?",                       image:"https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&q=80", caption:"¡El Oro del Tesoro!",    sub:"Monedas de cada rincón del mundo" },
-    { n:10, icon:"📦",  title:"El Cofre Legendario",    clue:"Soy de madera con refuerzos de metal, tengo tapa y cerradura. Dentro guardo todos los tesoros. ¿Qué soy?",          image:"https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c?w=600&q=80", caption:"¡El Cofre del Tesoro!",  sub:"¡La recompensa final!" },
+    { n:1, image:"./image/pista1.png" },
+    { n:2, image:"./image/pista2.jpg" },
+    { n:3, image:"./image/pista3.jpg" },
+    { n:4, image:"./image/pista4.jpg" },
+    { n:5, image:"./image/pista5.jpg" },
+    { n:6, image:"./image/pista6.jpg" },
+    { n:7, image:"./image/pista7.jpg" },
   ];
 
   // Stars
@@ -360,24 +366,21 @@
       const front = document.createElement('div');
       front.className = 'face face-front';
       front.innerHTML = `
-        ${isSolved ? '<span class="solved-badge">✓ Resuelta</span>' : ''}
-        <span class="card-number">— Pista ${c.n} —</span>
-        <span class="card-icon" style="--icon-delay:${i*0.3}s">${c.icon}</span>
-        <span class="card-title">${c.title}</span>
+        ${isSolved ? '<span class="solved-badge">✓</span>' : ''}
+        <p class="card-label">${isLocked ? '🔒' : `PISTA ${c.n}`}</p>
         <div class="divider-gold"></div>
-        <p class="clue-text">${c.clue}</p>
+        <p class="card-main">${isLocked ? '???' : '¡HAS CONSEGUIDO<br>UNA PISTA!'}</p>
+        <div class="divider-gold"></div>
         ${isLocked
-          ? `<div class="lock-icon">🔒</div><p class="lock-msg">Resuelve la pista anterior</p><button class="reveal-btn locked-btn">🔒 Bloqueada</button>`
-          : `<button class="reveal-btn" onclick="reveal(event,${i})">¡Lo sé! Revelar 🗝️</button>`}
+          ? `<button class="reveal-btn locked-btn">🔒 Bloqueada</button>`
+          : `<button class="reveal-btn" onclick="reveal(event,${i})">¡Revelar! 🗝️</button>`}
       `;
 
       const back = document.createElement('div');
       back.className = 'face face-back';
       back.innerHTML = `
-        <img class="back-img" src="${c.image}" alt="${c.caption}" loading="lazy"/>
-        <div class="back-caption">${c.caption}</div>
-        <div class="back-sub">${c.sub}</div>
-        <button class="flip-back-btn" onclick="unreveal(event,${i})">🔍 Ver pista de nuevo</button>
+        <img class="back-img" src="${c.image}" alt="Pista ${c.n}" loading="lazy"/>
+        <button class="flip-back-btn" onclick="unreveal(event,${i})">🔍 Ver de nuevo</button>
       `;
 
       inner.appendChild(front);
